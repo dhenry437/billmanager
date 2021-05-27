@@ -29,7 +29,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="/">
-        <%= image_tag 'favicon/android-chrome-512x512.png', width: 30, height: 30, class: 'd-inline-block align-text-top' %> Bill Manager
+        <%= image_tag 'favicon/android-chrome-512x512.png', width: 30, height: 30, class: 'd-inline-block align-text-top' %>
+        Bill Manager
       </a>
     </div>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -47,6 +48,12 @@
 </nav>
 
 <body>
+<% if notice %>
+  <div class="alert alert-info"><%= notice %></div>
+<% end %>
+<% if alert %>
+  <div class="alert alert-warning"><%= alert %></div>
+<% end %>
 <%= yield %>
 
 <!-- Bootstrap JS v5.0.1 -->
