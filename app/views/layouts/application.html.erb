@@ -19,6 +19,15 @@
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <%= image_tag 'favicon/android-chrome-512x512.png', width: 30, height: 30, class: 'd-inline-block align-text-top' %>
+      Bill Manager
+    </a>
+  </div>
+</nav>
+
 <body>
 <%= yield %>
 
