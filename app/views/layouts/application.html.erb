@@ -44,6 +44,9 @@
       </ul>
     </div>
     <% if user_signed_in? %>
+      <%= link_to destroy_user_session_path, method: :delete, class: 'no-style' do %>
+        <button class="btn btn-danger">Logout</button>
+      <% end %>
     <% else %>
       <%= link_to new_user_session_path, class: 'no-style' do %>
         <i style="font-size: 2rem" class="bi bi-person-circle"></i>
