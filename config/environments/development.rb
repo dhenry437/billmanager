@@ -76,4 +76,20 @@ Rails.application.configure do
 
   # Devise
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # SMTP
+  config.action_mailer.smtp_settings = {
+    :address              => "mail.smtp2go.com",
+    :port                 => 2525,
+    :user_name            => Rails.application.credentials.smtp[:user_name],
+    :password             => Rails.application.credentials.smtp[:password],
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
+
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.raise_delivery_errors = true
 end

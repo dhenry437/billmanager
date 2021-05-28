@@ -54,10 +54,10 @@
 
 <body>
 <% if notice %>
-  <div class="alert alert-info"><%= notice %></div>
+  <div class="mx-3 mt-3 alert alert-success"><%= notice %></div>
 <% end %>
 <% if alert %>
-  <div class="alert alert-warning"><%= alert %></div>
+  <div class="mx-3 mt-3 alert alert-danger"><%= alert %></div>
 <% end %>
 <%= yield %>
 
