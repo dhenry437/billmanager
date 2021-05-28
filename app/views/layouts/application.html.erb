@@ -29,7 +29,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="/">
-        <%= image_tag 'favicon/android-chrome-512x512.png', width: 30, height: 30, class: 'd-inline-block align-text-top' %> Bill Manager
+        <%= image_tag 'favicon/android-chrome-512x512.png', width: 30, height: 30, class: 'd-inline-block align-text-top' %>
+        Bill Manager
       </a>
     </div>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -42,11 +43,25 @@
         </li>
       </ul>
     </div>
-    <i style="font-size: 2rem" class="bi bi-person-circle"></i>
+    <% if user_signed_in? %>
+      <%= link_to destroy_user_session_path, method: :delete, class: 'no-style' do %>
+        <button class="btn btn-danger">Logout</button>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: 'no-style' do %>
+        <i style="font-size: 2rem" class="bi bi-person-circle"></i>
+      <% end %>
+    <% end %>
   </div>
 </nav>
 
 <body>
+<% if notice %>
+  <div class="mx-3 mt-3 alert alert-success"><%= notice %></div>
+<% end %>
+<% if alert %>
+  <div class="mx-3 mt-3 alert alert-danger"><%= alert %></div>
+<% end %>
 <%= yield %>
 
 <!-- Bootstrap JS v5.0.1 -->
