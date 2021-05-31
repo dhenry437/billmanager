@@ -9,7 +9,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 require('jquery')
 
-require('packs/calendar')
+// require('packs/calendar')
 
 Rails.start()
 Turbolinks.start()
