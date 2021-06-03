@@ -1,4 +1,4 @@
-<%= form_with model: bill, html: { class: 'mx-3 mb-3' } do |form| %>
+<%= form_with model: bill, html: { class: 'mb-3' } do |form| %>
 <% if bill.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(bill.errors.count, "error") %> prohibited this bill from being saved:</h2>
@@ -24,7 +24,7 @@
 
 <div class="mb-3">
   <%= form.label :date, class: 'form-label' %>
-  <%= form.date_select :date %>
+  <%= form.date_field :date, class: 'form-control' %>
 </div>
 
 <div class="mb-3">
