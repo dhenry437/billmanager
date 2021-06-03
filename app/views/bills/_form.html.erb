@@ -1,36 +1,45 @@
 <%= form_with model: bill, html: { class: 'mb-3' } do |form| %>
-<% if bill.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(bill.errors.count, "error") %> prohibited this bill from being saved:</h2>
+  <% if bill.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(bill.errors.count, "error") %> prohibited this bill from being saved:</h2>
 
-    <ul>
-      <% bill.errors.each do |error| %>
-        <li><%= error.full_message %></li>
-      <% end %>
-    </ul>
+      <ul>
+        <% bill.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
-<% end %>
 
-<div class="mb-3">
-  <%= form.label :name, class: 'form-label' %>
-  <%= form.text_field :name, class: 'form-control' %>
-</div>
+  <div class="input-group mb-3">
+    <%#= form.label :amount, class: 'form-label' %>
+    <span class="input-group-text">$</span>
+    <%= form.text_field :amount, class: 'form-control' %>
+  </div>
 
-<div class="input-group mb-3">
-  <%#= form.label :amount, class: 'form-label' %>
-  <span class="input-group-text">$</span>
-  <%= form.text_field :amount, class: 'form-control' %>
-</div>
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" id="recurringCheck">
+    <label class="form-check-label" for="recurringCheck">Recurring?</label>
+  </div>
 
-<div class="mb-3">
-  <%= form.label :date, class: 'form-label' %>
-  <%= form.date_field :date, class: 'form-control' %>
-</div>
+  <div id="notRecurring">
+    <div class="mb-3">
+      <%= form.label :date, class: 'form-label' %>
+      <%= form.date_field :date, class: 'form-control' %>
+    </div>
+  </div>
 
-<div class="mb-3">
-  <%= form.label :recurring, class: 'form-label' %>
-  <%= form.text_area :recurring, class: 'form-control' %>
-</div>
+  <div id="recurring" class="visually-hidden">
+    <div class="mb-3">
+      <%= form.label :recurring, class: 'form-label' %>
+      <%= form.text_area :recurring, class: 'form-control' %>
+    </div>
+  </div>
 
-<%= form.submit 'Submit', class: 'btn btn-primary' %>
+  <%= form.submit 'Submit', class: 'btn btn-primary' %>
 <% end %>
