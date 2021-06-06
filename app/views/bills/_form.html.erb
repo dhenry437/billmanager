@@ -22,41 +22,30 @@
     <%= form.text_field :amount, class: 'form-control' %>
   </div>
 
-  <div class="form-check form-switch mb-3">
-    <input class="form-check-input" type="checkbox" id="recurringCheck">
-    <label class="form-check-label" for="recurringCheck">Recurring?</label>
+  <div class="mb-3">
+    <%= form.label :date, class: 'form-label' %>
+    <%= form.date_field :date, class: 'form-control' %>
   </div>
 
-  <div id="notRecurring">
-    <div class="mb-3">
-      <%= form.label :date, class: 'form-label' %>
-      <%= form.date_field :date, class: 'form-control' %>
-    </div>
+  <div class="form-check form-switch mb-3">
+    <%= form.check_box 'recurring', class: 'form-check-input', id: 'recurringCheck' %>
+    <%= form.label 'Reccuring?', class: 'form-check-label' %>
   </div>
 
   <div id="recurring" class="visually-hidden">
     <div class="d-flex justify-content-start mb-3">
       <span class="align-self-center flex-shrink-0 me-2">Recurring every</span>
-      <%= form.text_field :name, class: 'form-control me-2', style: 'width: inherit' %>
-      <select class="form-select" aria-label="Default select example">
-        <option value="daily">Day(s)</option>
-        <option value="weekly">Week(s)</option>
-        <option value="monthly">Month(s)</option>
-        <option value="yearly">Year(s)</option>
-      </select>
+      <%= form.number_field 'recurring_every', class: 'form-control me-2' %>
+      <%= form.select 'recurring_period',
+                      [%w[Day(s) daily], %w[Week(s) weekly], %w[Month(s) monthly], %w[Year(s) yearly]], {},
+                      { class: 'form-select' } %>
     </div>
 
-<!--    <div class="mb-3">-->
-      <%#= form.label :recurring, class: 'form-label' %>
-      <%#= form.text_area :recurring, class: 'form-control' %>
-<!--    </div>-->
     <div class="d-flex justify-content-start mb-1">
-      <span class="align-self-center flex-shrink-0 me-2">From</span>
-      <%= form.date_field :recurring, class: 'form-control' %>
-      <span class="align-self-center flex-shrink-0 mx-2">until</span>
-      <%= form.date_field :recurring, class: 'form-control' %>
+      <span class="align-self-center flex-shrink-0 me-2">Occurs until</span>
+      <%= form.date_field 'occurs_until', class: 'form-control' %>
     </div>
-    <div id="emailHelp" class="form-text mb-3">Leave both these fields blank for an indefinitely repeating event.</div>
+    <div id="emailHelp" class="form-text mb-3">Leave this field blank for an indefinitely repeating event.</div>
   </div>
 
   <%= form.submit 'Submit', class: 'btn btn-primary' %>
