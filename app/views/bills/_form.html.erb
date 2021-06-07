@@ -17,7 +17,6 @@
   </div>
 
   <div class="input-group mb-3">
-    <%#= form.label :amount, class: 'form-label' %>
     <span class="input-group-text">$</span>
     <%= form.text_field :amount, class: 'form-control' %>
   </div>
@@ -28,7 +27,7 @@
   </div>
 
   <div class="form-check form-switch mb-3">
-    <%= form.check_box 'recurring', class: 'form-check-input', id: 'recurringCheck' %>
+    <%= form.check_box 'recurring_bool', class: 'form-check-input', id: 'recurringCheck' %>
     <%= form.label 'Reccuring?', class: 'form-check-label' %>
   </div>
 
