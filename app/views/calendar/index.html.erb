@@ -1,6 +1,10 @@
 <div class="m-3">
-  <%= month_calendar do |date| %>
+  <%= month_calendar events: @events do |date, events| %>
     <%= date.day %>
+
+    <% events.each do |event| %>
+      <br><span class="badge bg-danger"><%= event.name %> - $<%= '%.2f' % event.amount %></span>
+    <% end %>
   <% end %>
 </div>
 
