@@ -1,0 +1,10 @@
+<div style="max-width: 450px" class="mx-auto px-3 mt-3">
+  <h1>Editing Payday</h1>
+
+  <%= render 'form', payday: @payday %>
+
+  <%= link_to 'Show', @payday %> |
+  <%= link_to 'Back', paydays_path %>
+</div>
+
+<%= javascript_pack_tag 'payday', 'data-turbolinks-track': 'reload' %>

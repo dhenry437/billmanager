@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_01_135616) do
+ActiveRecord::Schema.define(version: 2021_06_08_090718) do
 
   create_table "bills", force: :cascade do |t|
     t.string "name"
     t.float "amount"
+    t.date "date"
+    t.text "recurring"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "paydays", force: :cascade do |t|
+    t.string "name"
     t.date "date"
     t.text "recurring"
     t.integer "user_id"

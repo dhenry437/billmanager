@@ -44,6 +44,9 @@
         <li class="nav-item">
           <a class="nav-link <% if current_page?('/bills') %>active<% end %>" href="/bills">Bills</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link <% if current_page?('/paydays') %>active<% end %>" href="/paydays">Paydays</a>
+        </li>
       </ul>
     </div>
     <% if user_signed_in? %>

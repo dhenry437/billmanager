@@ -1,0 +1,46 @@
+<%= form_with(model: payday) do |form| %>
+  <% if payday.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(payday.errors.count, "error") %> prohibited this payday from being saved:</h2>
+
+      <ul>
+        <% payday.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :date, class: 'form-label' %>
+    <%= form.date_field :date, class: 'form-control', required: true %>
+  </div>
+
+  <div class="form-check form-switch mb-3">
+    <%= form.check_box 'recurring_bool', class: 'form-check-input', id: 'recurringCheck' %>
+    <%= form.label 'Reccuring?', class: 'form-check-label' %>
+  </div>
+
+  <div id="recurring" class="visually-hidden">
+    <div class="d-flex justify-content-start mb-3">
+      <span class="align-self-center flex-shrink-0 me-2">Recurring every</span>
+      <%= form.number_field 'recurring_every', class: 'form-control me-2' %>
+      <%= form.select 'recurring_period',
+                      [%w[Day(s) daily], %w[Week(s) weekly], %w[Month(s) monthly], %w[Year(s) yearly]], {},
+                      { class: 'form-select' } %>
+    </div>
+
+    <div class="d-flex justify-content-start mb-1">
+      <span class="align-self-center flex-shrink-0 me-2">Occurs until</span>
+      <%= form.date_field 'occurs_until', class: 'form-control' %>
+    </div>
+    <div id="emailHelp" class="form-text mb-3">Leave this field blank for an indefinitely repeating event.</div>
+  </div>
+
+  <%= form.submit 'Submit', class: 'btn btn-primary' %>
+<% end %>

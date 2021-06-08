@@ -6,4 +6,5 @@ class User < ApplicationRecord
          :confirmable, :trackable
 
   has_many :bills
+  has_many :paydays
 end

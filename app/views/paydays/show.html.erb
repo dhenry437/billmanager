@@ -1,0 +1,21 @@
+<div style="max-width: 450px" class="mx-auto px-3 mt-3">
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @payday.name %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= @payday.date %>
+  </p>
+
+  <p>
+    <strong>Reccuring:</strong>
+    <%= @payday.recurring %>
+  </p>
+
+  <%= link_to 'Edit', edit_payday_path(@payday) %> |
+  <%= link_to 'Back', paydays_path %>
+</div>

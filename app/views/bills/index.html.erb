@@ -7,7 +7,6 @@
       <th scope="col">Name</th>
       <th scope="col">Amount</th>
       <th scope="col">Date</th>
-      <th scope="col">Recurring</th>
       <th scope="col"></th>
     </tr>
     </thead>
@@ -18,7 +17,6 @@
         <td><%= bill.name %></td>
         <td><%= bill.amount %></td>
         <td><%= bill.date %></td>
-        <td><%= bill.recurring %></td>
         <td style="text-align: end"><%= link_to 'Show', bill %> <%= link_to 'Edit', edit_bill_path(bill) %> <%= link_to 'Destroy', bill, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
