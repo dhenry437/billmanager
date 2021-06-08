@@ -1,0 +1,14 @@
+<div class="m-3">
+  <%= month_calendar events: @calendar_bills do |date, bills| %>
+    <%= date.day %>
+
+    <% bills.each do |bill| %>
+      <br>
+      <%= link_to bill_path(bill.id) do %>
+        <span class="badge bg-danger"><%= bill.name %> - $<%= '%.2f' % bill.amount %></span>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= javascript_pack_tag 'calendar', 'data-turbolinks-track': 'reload' %>

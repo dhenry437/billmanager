@@ -1,0 +1,29 @@
+<div style="max-width: 450px" class="mx-auto px-3 mt-3">
+  <p>
+    <strong>Name:</strong>
+    <%= @bill.name %>
+  </p>
+
+  <p>
+    <strong>Amount:</strong>
+    <%= @bill.amount %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= @bill.date %>
+  </p>
+
+  <p>
+    <strong>Recurring:</strong>
+    <%= @bill.recurring %>
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= @bill.user_id %>
+  </p>
+
+  <%= link_to 'Edit', edit_bill_path(@bill) %> |
+  <%= link_to 'Back', bills_path %>
+</div>

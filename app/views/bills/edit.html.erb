@@ -1,0 +1,10 @@
+<div style="max-width: 450px" class="mx-auto px-3 mt-3">
+  <h1>Editing Bill</h1>
+
+  <%= render 'form', bill: @bill %>
+
+  <%= link_to 'Show', @bill %> |
+  <%= link_to 'Back', bills_path %>
+</div>
+
+<%= javascript_pack_tag 'bill', 'data-turbolinks-track': 'reload' %>
