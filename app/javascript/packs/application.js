@@ -9,6 +9,22 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 require('jquery')
 
+// Bootstrap form validation rework
+$(document).on('turbolinks:load', function () {
+    $('form :submit').each(function () { // dont know why i have to do this but i couldn't catch the submit event before rails took over
+        let form = $(this).parents('form')[0];
+
+        $(this).on('click', function (e) {
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            form.classList.add('was-validated')
+        });
+    });
+});
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
