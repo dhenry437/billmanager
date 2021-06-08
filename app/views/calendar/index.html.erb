@@ -1,9 +1,12 @@
 <div class="m-3">
-  <%= month_calendar events: @events do |date, events| %>
+  <%= month_calendar events: @calendar_bills do |date, bills| %>
     <%= date.day %>
 
-    <% events.each do |event| %>
-      <br><span class="badge bg-danger"><%= event.name %> - $<%= '%.2f' % event.amount %></span>
+    <% bills.each do |bill| %>
+      <br>
+      <%= link_to bill_path(bill.id) do %>
+        <span class="badge bg-danger"><%= bill.name %> - $<%= '%.2f' % bill.amount %></span>
+      <% end %>
     <% end %>
   <% end %>
 </div>
