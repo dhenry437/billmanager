@@ -18,7 +18,7 @@
 
   <div class="input-group mb-3">
     <span class="input-group-text">$</span>
-    <%= form.number_field :amount, class: 'form-control', required: true %>
+    <%= form.number_field :amount, class: 'form-control', required: true, step: '.01' %>
   </div>
 
   <div class="mb-3">
