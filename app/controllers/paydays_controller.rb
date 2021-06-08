@@ -39,7 +39,7 @@ class PaydaysController < ApplicationController
   # PATCH/PUT /paydays/1 or /paydays/1.json
   def update
     respond_to do |format|
-      if @payday.update(name: params[:payday][:name], amount: params[:payday][:amount], date: params[:payday][:date], recurring: generate_recurring_yaml)
+      if @payday.update(name: params[:payday][:name], date: params[:payday][:date], recurring: generate_recurring_yaml)
         format.html { redirect_to @payday, notice: "Payday was successfully updated." }
         format.json { render :show, status: :ok, location: @payday }
       else
