@@ -1,3 +1,20 @@
 // Place all the styles related to the Bills controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+// Disable validation style on bootstrap switch
+.form-switch .form-check-input.is-valid, .was-validated .form-check-input:valid {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+.form-switch .form-check-input.is-valid, .was-validated .form-check-input:valid:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+.form-switch .form-check-input.is-valid, .was-validated .form-check-input:valid:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+}
+.form-switch .form-check-input.is-valid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label {
+  color: inherit;
+}

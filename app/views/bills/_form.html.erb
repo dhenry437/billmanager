@@ -13,17 +13,17 @@
 
   <div class="mb-3">
     <%= form.label :name, class: 'form-label' %>
-    <%= form.text_field :name, class: 'form-control' %>
+    <%= form.text_field :name, class: 'form-control', required: true %>
   </div>
 
   <div class="input-group mb-3">
     <span class="input-group-text">$</span>
-    <%= form.text_field :amount, class: 'form-control' %>
+    <%= form.number_field :amount, class: 'form-control', required: true %>
   </div>
 
   <div class="mb-3">
     <%= form.label :date, class: 'form-label' %>
-    <%= form.date_field :date, class: 'form-control' %>
+    <%= form.date_field :date, class: 'form-control', required: true %>
   </div>
 
   <div class="form-check form-switch mb-3">
