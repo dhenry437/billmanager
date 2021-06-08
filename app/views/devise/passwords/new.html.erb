@@ -6,7 +6,7 @@
 
     <div class="mb-3">
       <%= f.label :email, class: 'form-label' %><br/>
-      <%= f.email_field :email, class: 'form-control', autofocus: true, autocomplete: 'email' %>
+      <%= f.email_field :email, class: 'form-control', autofocus: true, autocomplete: 'email', required: true %>
     </div>
 
     <%= f.submit 'Send me reset password instructions', class: 'btn btn-primary' %>
