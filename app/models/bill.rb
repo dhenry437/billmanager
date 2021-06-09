@@ -1,11 +1,13 @@
 class Bill < ApplicationRecord
   belongs_to :user
 
+  # Parse the IceCube rule for a Bill
   def schedule
     IceCube::Schedule.from_yaml recurring # Parse rule from yaml in DB
   end
 
-  def bill_next_occurrence(start)
+  # Returns the next occurrence or recurrence of a Bill
+  def next_bill(start = Date.today)
     if recurring.nil?
       date > Date.today ? [self] : nil
     else
@@ -14,6 +16,7 @@ class Bill < ApplicationRecord
     end
   end
 
+  # Return occurrences and recurrences of a Bill for the calendar display month
   def calendar_bills(start)
     if recurring.nil?
       [self] # Return the original bill if recurring is nil
