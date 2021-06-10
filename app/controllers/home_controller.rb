@@ -2,11 +2,14 @@ class HomeController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @bills = Bill.where(user_id: current_user.id).all
+    @paydays = Payday.where(user_id: current_user.id).all
+
     @target_account_balance = balance_at
 
     next_payday = Payday.where(user_id: current_user.id).all.flat_map(&:next_payday)
     next_payday = next_payday.any? ? next_payday.min_by(&:date) : nil # Check for [nil] returned
-    @next_deposit = balance_at(next_payday.date) - @target_account_balance
+    @next_deposit = nil if next_payday.nil? || balance_at(next_payday.date) - @target_account_balance
 
     last_payday = Payday.where(user_id: current_user.id).all.flat_map(&:previous_payday)
     last_payday = last_payday.any? ? last_payday.max_by(&:date) : nil # Check for [nil] returned

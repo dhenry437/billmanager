@@ -1,5 +1,16 @@
 <div class="mx-3 mt-3">
-  <h1>There should be <span class="badge bg-secondary">$<%= "%.2f" % @target_account_balance %></span> in your bills account</h1>
-  <h2>You will deposit <span class="badge bg-secondary">$<%= "%.2f" % @next_deposit %></span> at your next payday on Xxxday the Xth</h2>
-  <h3>You should have deposited <span class="badge bg-secondary">$<%= "%.2f" % @next_deposit %></span> at your last payday on Xxxday the Xth</h3>
+  <% if @bills.empty? && @paydays.empty? %>
+    <div class="alert alert-warning">Add some bills and paydays to get started.</div>
+  <% elsif @bills.empty? && !@paydays.empty? %>
+    <div class="alert alert-warning">Add some bills to get started.</div>
+  <% elsif !@bills.empty? && @paydays.empty? %>
+    <div class="alert alert-warning">Add some paydays to get started.</div>
+  <% elsif !@bills.empty? && !@paydays.empty? %>
+    <h1>There should be <span class="badge bg-secondary">$<%= "%.2f" % @target_account_balance %></span> in your bills
+      account</h1>
+    <h1>You will deposit <span class="badge bg-secondary">$<%= "%.2f" % @next_deposit %></span> at your next payday on
+      Xxxday the Xth</h1>
+    <h1>You should have deposited <span class="badge bg-secondary">$<%= "%.2f" % @last_deposit %></span> at your last
+      payday on Xxxday the Xth</h1>
+  <% end %>
 </div>

@@ -1,0 +1,65 @@
+id,name,amount,date,recurring,user_id,created_at,updated_at
+24,Rent,869.0,2020-02-21,"---
+:start_time: 2020-02-21 00:00:00.000000000 +11:00
+:rrules:
+- :validations: {}
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+",12,2021-06-07 07:33:45.187869,2021-06-08 20:56:05.435893
+26,Internet,45.0,2020-02-15,"---
+:start_time: 2020-02-15 00:00:00.000000000 +11:00
+:rrules:
+- :validations: {}
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+",12,2021-06-08 20:45:03.736290,2021-06-08 20:45:03.736290
+27,Phone,105.0,2020-03-18,"---
+:start_time: 2020-03-18 00:00:00.000000000 +11:00
+:rrules:
+- :validations: {}
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+",12,2021-06-08 20:56:45.123726,2021-06-08 20:56:45.123726
+28,Hot Water,150.0,2020-04-21,"---
+:start_time: 2020-04-21 00:00:00.000000000 +10:00
+:rrules:
+- :validations: {}
+  :rule_type: IceCube::WeeklyRule
+  :interval: 3
+  :week_start: 0
+:rtimes: []
+:extimes: []
+",12,2021-06-08 21:01:14.684103,2021-06-08 21:01:14.684103
+29,Car Registration,814.0,2022-03-20,"---
+:start_time: 2022-03-20 00:00:00.000000000 +11:00
+:rrules:
+- :validations: {}
+  :rule_type: IceCube::YearlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+",12,2021-06-08 21:05:42.136969,2021-06-08 21:05:42.136969
+30,Car Insurance,654.36,2020-09-13,"---
+:start_time: 2020-09-13 00:00:00.000000000 +10:00
+:rrules:
+- :validations: {}
+  :rule_type: IceCube::YearlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+",12,2021-06-08 21:17:19.483910,2021-06-08 21:17:19.483910
+31,Water,50.0,2020-06-22,"---
+:start_time: 2020-06-22 00:00:00.000000000 +10:00
+:rrules:
+- :validations: {}
+  :rule_type: IceCube::MonthlyRule
+  :interval: 3
+:rtimes: []
+:extimes: []
+",12,2021-06-08 21:23:11.246962,2021-06-08 21:23:11.246962
