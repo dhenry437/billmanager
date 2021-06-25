@@ -1,19 +1,29 @@
 class HomeController < ApplicationController
   before_action :authenticate_user!
+
   before_action :set_calendar_events, only: :index
+  before_action :set_target_account_balance, only: :index
+  # before_action :set_next_deposit, only: :index
+  # before_action :set_last_deposit, only: :index
 
-  def index
-    # @target_account_balance = balance_at(params.fetch(:date, Time.now))
-    @target_account_balance = account_balance_at(params.fetch(:date, Time.now))
-    # @target_account_balance = account_balance_at(params[:date])
+  def index; end
 
+  def set_next_deposit
     next_payday = Payday.where(user_id: current_user.id).all.flat_map(&:next_payday)
     next_payday = next_payday.any? ? next_payday.min_by(&:date) : nil # Check for [nil] returned
     @next_deposit = nil if next_payday.nil? || balance_at(next_payday.date) - @target_account_balance
+  end
 
+  def set_last_deposit
     last_payday = Payday.where(user_id: current_user.id).all.flat_map(&:previous_payday)
     last_payday = last_payday.any? ? last_payday.max_by(&:date) : nil # Check for [nil] returned
     @last_deposit = nil if last_payday.nil? || @target_account_balance - (balance_at(last_payday.date - 1.day))
+  end
+
+  def set_target_account_balance
+    date = params[:date] || Date.today
+    date = date.to_date + 1.second
+    @target_account_balance = account_balance_at(date)
   end
 
   def set_calendar_events
@@ -44,13 +54,11 @@ class HomeController < ApplicationController
     last_payday = Payday.where(user_id: current_user.id).all.flat_map { |x| x.previous_payday(date) }
     last_payday = last_payday.any? ? last_payday.max_by(&:date) : nil # Check for [nil] returned
 
-    bills_since_last_payday = Bill.where(user_id: current_user.id).all.flat_map { |x| x.bills_between(last_payday.date, date) }
-
-
-    if last_payday
-      balance_at(last_payday.date) - bills_since_last_payday.inject(0) { |sum, x| sum + x.amount }
-    else
-      -1
+    bills_since_last_payday = Bill.where(user_id: current_user.id).all.flat_map do |x|
+      x.bills_between(last_payday.date, date)
     end
+
+    # TODO: Figure out what to do when there is not a previous payday
+    last_payday ? balance_at(last_payday.date) - bills_since_last_payday.inject(0) { |sum, x| sum + x.amount } : -1
   end
 end
