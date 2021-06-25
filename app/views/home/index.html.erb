@@ -6,11 +6,38 @@
   <% elsif !@bills.empty? && @paydays.empty? %>
     <div class="alert alert-warning">Add some paydays to get started.</div>
   <% elsif !@bills.empty? && !@paydays.empty? %>
-    <h1>There should be <span class="badge bg-secondary">$<%= "%.2f" % @target_account_balance %></span> in your bills
-      account</h1>
-    <h1>You will deposit <span class="badge bg-secondary">$<%= "%.2f" % @next_deposit %></span> at your next payday on
-      Xxxday the Xth</h1>
-    <h1>You should have deposited <span class="badge bg-secondary">$<%= "%.2f" % @last_deposit %></span> at your last
-      payday on Xxxday the Xth</h1>
+    <div class="row">
+      <div class="col-8">
+        <%= month_calendar events: @events do |date, events| %>
+          <%= date.day %>
+
+          <% events.each do |event| %>
+            <% if event.is_a? Bill %>
+              <br>
+              <%= link_to bill_path(event.id) do %>
+                <span class="badge bg-danger"><%= event.name %> - $<%= "%.2f" % event.amount %></span>
+              <% end %>
+            <% elsif event.is_a? Payday %>
+              <br>
+              <%= link_to payday_path(event.id) do %>
+                <span class="badge bg-success">Payday - <%= event.name %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="col-4">
+        <h1>There should be <span class="badge bg-secondary">$<%= "%.2f" % @target_account_balance %></span> in your
+          bills account<% if params.dig(:date) %> on <%= params[:date] %><% end %></h1>
+        <!--      <h1>You will deposit <span class="badge bg-secondary">$<%#= "%.2f" % @next_deposit %></span> at your next payday on-->
+        <!--        Xxxday the Xth</h1>-->
+        <!--      <h1>You should have deposited <span class="badge bg-secondary">$<%#= "%.2f" % @last_deposit %></span> at your last-->
+        <!--        payday on Xxxday the Xth</h1>-->
+      </div>
+    </div>
+
   <% end %>
 </div>
+
+<%= javascript_pack_tag 'calendar', 'data-turbolinks-track': 'reload' %>

@@ -16,13 +16,24 @@ class Bill < ApplicationRecord
     end
   end
 
+  # Returns a Bill and all its recurrences that lie in a given time period
+  def bills_between(start_date, end_date)
+    if recurring.nil?
+      date > Date.today && date < end_date ? [self] : nil
+    else
+      schedule.occurrences_between(start_date.to_time, end_date.to_time, spans: true).map do |x| # Get occurrences
+        Bill.new(id: id, name: name, amount: amount, date: x) # Create new in memory bill
+      end
+    end
+  end
+
   # Return occurrences and recurrences of a Bill for the calendar display month
   def calendar_bills(start)
     if recurring.nil?
       [self] # Return the original bill if recurring is nil
     else
-      start_date = start.beginning_of_month.beginning_of_week
-      end_date = start.end_of_month.end_of_week
+      start_date = start.to_time.beginning_of_month.beginning_of_week
+      end_date = start.to_time.end_of_month.end_of_week
 
       schedule.occurrences_between(start_date, end_date).map do |x| # Get occurrences
         Bill.new(id: id, name: name, amount: amount, date: x) # Create new in memory bill

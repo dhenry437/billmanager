@@ -11,8 +11,8 @@ class Payday < ApplicationRecord
     if recurring.nil?
       [self] # Return the original payday if recurring is nil
     else
-      start_date = start.beginning_of_month.beginning_of_week
-      end_date = start.end_of_month.end_of_week
+      start_date = start.to_time.beginning_of_month.beginning_of_week
+      end_date = start.to_time.end_of_month.end_of_week
 
       schedule.occurrences_between(start_date, end_date).map do |x| # Get occurrences
         Payday.new(id: id, name: name, date: x) # Create new in memory payday
@@ -49,7 +49,7 @@ class Payday < ApplicationRecord
     if recurring.nil?
       date > Date.today && date < end_date ? [self] : nil
     else
-      schedule.occurrences_between(start_date.to_time, end_date.to_time).map do |x| # Get occurrences
+      schedule.occurrences_between(start_date.to_time, end_date.to_time, spans: true).map do |x| # Get occurrences
         Payday.new(id: id, name: name, date: x) # Create new in memory payday
       end
     end
