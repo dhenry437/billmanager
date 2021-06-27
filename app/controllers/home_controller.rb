@@ -31,7 +31,8 @@ class HomeController < ApplicationController
     @calendar_bills = @bills.flat_map { |x| x.calendar_bills(params.fetch(:start_date, Time.zone.now)) }
     @paydays = Payday.where(user_id: current_user.id).all
     @calendar_paydays = @paydays.flat_map { |x| x.calendar_paydays(params.fetch(:start_date, Time.zone.now)) }
-    @events = @calendar_bills + @calendar_paydays
+    @calendar_account_balances = calendar_account_balances(params.fetch(:start_date, Time.zone.now))
+    @events = @calendar_account_balances + @calendar_bills + @calendar_paydays
   end
 
   # Calculate target account balance for a given date
@@ -60,5 +61,15 @@ class HomeController < ApplicationController
 
     # TODO: Figure out what to do when there is not a previous payday
     last_payday ? balance_at(last_payday.date) - bills_since_last_payday.inject(0) { |sum, x| sum + x.amount } : -1
+  end
+
+  def calendar_account_balances(start)
+    start_date = start.to_time.beginning_of_month.beginning_of_week
+    end_date = start.to_time.end_of_month.end_of_week
+
+    start_date.to_date.upto(end_date.to_date).map do |x|
+      x += 1.second
+      AccountBalance.new(x, account_balance_at(x))
+    end
   end
 end

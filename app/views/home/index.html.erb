@@ -7,12 +7,15 @@
     <div class="alert alert-warning">Add some paydays to get started.</div>
   <% elsif !@bills.empty? && !@paydays.empty? %>
     <div class="row">
-      <div class="col-8">
+      <div class="col-lg-8">
         <%= month_calendar events: @events do |date, events| %>
           <%= date.day %>
 
           <% events.each do |event| %>
-            <% if event.is_a? Bill %>
+            <% if event.is_a? AccountBalance %>
+              <br>
+              <span class="badge bg-light text-dark">$<%= "%.2f" % event.amount %></span>
+            <% elsif event.is_a? Bill %>
               <br>
               <%= link_to bill_path(event.id) do %>
                 <span class="badge bg-danger"><%= event.name %> - $<%= "%.2f" % event.amount %></span>
@@ -27,7 +30,7 @@
         <% end %>
       </div>
 
-      <div class="col-4">
+      <div class="col-lg-4">
         <h1>There should be <span class="badge bg-secondary">$<%= "%.2f" % @target_account_balance %></span> in your
           bills account<% if params.dig(:date) %> on <%= params[:date] %><% end %></h1>
         <!--      <h1>You will deposit <span class="badge bg-secondary">$<%#= "%.2f" % @next_deposit %></span> at your next payday on-->
