@@ -10,4 +10,14 @@ class CalendarController < ApplicationController
 
     @events = @calendar_bills + @calendar_paydays
   end
+
+  def settings
+    if params[:show_balance_each_day]
+      cookies.permanent[:show_balance_each_day] = params[:show_balance_each_day]
+    else
+      cookies.delete(:show_balance_each_day)
+    end
+
+    redirect_back(fallback_location: root_path)
+  end
 end

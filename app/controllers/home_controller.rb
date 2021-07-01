@@ -31,8 +31,12 @@ class HomeController < ApplicationController
     @calendar_bills = @bills.flat_map { |x| x.calendar_bills(params.fetch(:start_date, Time.zone.now)) }
     @paydays = Payday.where(user_id: current_user.id).all
     @calendar_paydays = @paydays.flat_map { |x| x.calendar_paydays(params.fetch(:start_date, Time.zone.now)) }
-    @calendar_account_balances = calendar_account_balances(params.fetch(:start_date, Time.zone.now))
-    @events = @calendar_account_balances + @calendar_bills + @calendar_paydays
+    if cookies[:show_balance_each_day]
+      @calendar_account_balances = calendar_account_balances(params.fetch(:start_date, Time.zone.now))
+      @events = @calendar_account_balances + @calendar_bills + @calendar_paydays
+    else
+      @events = @calendar_bills + @calendar_paydays
+    end
   end
 
   # Calculate target account balance for a given date
