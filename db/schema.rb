@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_08_090718) do
+ActiveRecord::Schema.define(version: 2021_07_02_035224) do
 
   create_table "bills", force: :cascade do |t|
     t.string "name"
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 2021_06_08_090718) do
     t.datetime "confirmation_sent_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index "\"unlock_token\"", name: "index_users_on_unlock_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
