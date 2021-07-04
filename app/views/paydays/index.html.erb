@@ -6,6 +6,7 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Date</th>
+      <th scope="col">Recurring</th>
       <th scope="col"></th>
     </tr>
     </thead>
@@ -15,6 +16,11 @@
       <tr>
         <td><%= payday.name %></td>
         <td><%= payday.date %></td>
+        <% if payday.recurring %>
+          <td><%= payday.schedule.to_s %></td>
+        <% else %>
+          <td></td>
+        <% end %>
         <td style="text-align: end"><%= link_to 'Show', payday %> <%= link_to 'Edit', edit_payday_path(payday) %> <%= link_to 'Destroy', payday, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

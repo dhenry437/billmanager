@@ -1,27 +1,35 @@
 <div class="px-3 mt-3">
   <h1>Bills</h1>
 
-  <table class="table">
-    <thead class="table-light">
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Date</th>
-      <th scope="col"></th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @bills.each do |bill| %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="table-light">
       <tr>
-        <td><%= bill.name %></td>
-        <td>$<%= "%.2f" % bill.amount %></td>
-        <td><%= bill.date %></td>
-        <td style="text-align: end"><%= link_to 'Show', bill %> <%= link_to 'Edit', edit_bill_path(bill) %> <%= link_to 'Destroy', bill, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th scope="col">Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Date</th>
+        <th scope="col">Recurring</th>
+        <th scope="col"></th>
       </tr>
-    <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+      <% @bills.each do |bill| %>
+        <tr>
+          <td><%= bill.name %></td>
+          <td>$<%= "%.2f" % bill.amount %></td>
+          <td><%= bill.date %></td>
+          <% if bill.recurring %>
+            <td><%= bill.schedule.to_s %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td style="text-align: end"><%= link_to 'Show', bill %> <%= link_to 'Edit', edit_bill_path(bill) %> <%= link_to 'Destroy', bill, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
   <%= link_to 'New Bill', new_bill_path, class: 'btn btn-primary' %>
 </div>
