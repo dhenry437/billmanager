@@ -16,7 +16,13 @@ class BillsController < ApplicationController
   end
 
   # GET /bills/1/edit
-  def edit; end
+  def edit
+    return unless @bill.recurring
+    hash = @bill.schedule.to_hash
+    @rule_type = hash[:rrules][0][:rule_type].delete_prefix('IceCube::').delete_suffix('Rule').downcase
+    @rule_interval = hash[:rrules][0][:interval]
+    @occurs_until = hash[:end_time]&.to_date
+  end
 
   # POST /bills or /bills.json
   def create

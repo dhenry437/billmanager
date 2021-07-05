@@ -6,4 +6,4 @@ $('#recurringCheck').change(function () {
         $('#recurring').addClass('visually-hidden');
         $('#bill_recurring_every').prop('required', false);
     }
-})
+});
