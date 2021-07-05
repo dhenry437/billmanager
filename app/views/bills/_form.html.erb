@@ -32,9 +32,7 @@
     <%= form.label 'Recurring?', class: 'form-check-label' %>
   </div>
 
-  <div id="recurring"
-       <% unless @bill.recurring %>class="visually-hidden"
-  <% end %>>
+  <div id="recurring" <% unless @bill.recurring %>class="visually-hidden"<% end %>>
     <div class="d-flex justify-content-start mb-3">
       <span class="align-self-center flex-shrink-0 me-2">Recurring every</span>
       <%= form.number_field 'recurring_every', class: 'form-control me-2', value: @rule_interval,

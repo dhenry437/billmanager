@@ -18,6 +18,7 @@ class BillsController < ApplicationController
   # GET /bills/1/edit
   def edit
     return unless @bill.recurring
+
     hash = @bill.schedule.to_hash
     @rule_type = hash[:rrules][0][:rule_type].delete_prefix('IceCube::').delete_suffix('Rule').downcase
     @rule_interval = hash[:rrules][0][:interval]
