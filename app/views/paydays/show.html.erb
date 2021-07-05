@@ -12,8 +12,8 @@
   </p>
 
   <p>
-    <strong>Reccuring:</strong>
-    <%= @payday.recurring %>
+    <strong>Recurring:</strong>
+    <%= @payday.schedule.to_s %>
   </p>
 
   <%= link_to 'Edit', edit_payday_path(@payday) %> |

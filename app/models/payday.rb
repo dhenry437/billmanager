@@ -3,6 +3,8 @@ class Payday < ApplicationRecord
 
   # Parse the IceCube rule for a Payday
   def schedule
+    return unless recurring
+
     IceCube::Schedule.from_yaml recurring # Parse rule from yaml in DB
   end
 
