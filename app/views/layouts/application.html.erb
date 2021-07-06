@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bill Manager</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <!-- Bootstrap CS v5.0.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons v1.5.0 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="<%= image_path 'favicon/apple-touch-icon.png' %>">
+  <link rel="icon" type="image/png" sizes="32x32" href="<%= image_path 'favicon/favicon-32x32.png' %>">
+  <link rel="icon" type="image/png" sizes="16x16" href="<%= image_path 'favicon/favicon-16x16.png' %>">
+  <link rel="manifest" href="<%= image_path 'favicon/site.webmanifest' %>">
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div>
+      <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <%= image_tag 'favicon/android-chrome-512x512.png', width: 30, height: 30, class: 'd-inline-block align-text-top' %>
+        Bill Manager
+      </a>
+    </div>
+    <div class="d-block d-lg-none">
+      <% if user_signed_in? %>
+        <div class="btn-group">
+          <a class="no-style" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg width="2rem" height="2rem" data-jdenticon-value="<%= current_user.email %>"></svg>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><%= link_to destroy_user_session_path, method: :delete, class: 'no-style' do %>
+                <button class="mx-3 btn btn-danger">Logout</button>
+              <% end %></li>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to new_user_session_path, class: 'no-style' do %>
+          <i style="font-size: 2rem" class="bi bi-person-circle"></i>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link
+            <% if current_page?('/') %>active
+            <% end %>" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link
+            <% if current_page?('/calendar') %>active
+            <% end %>" href="/calendar">Calendar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link
+            <% if current_page?('/bills') %>active
+            <% end %>" href="/bills">Bills</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link
+            <% if current_page?('/paydays') %>active
+            <% end %>" href="/paydays">Paydays</a>
+        </li>
+      </ul>
+    </div>
+    <div class="d-none d-lg-block">
+      <% if user_signed_in? %>
+        <div class="btn-group">
+          <a class="no-style" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg width="2rem" height="2rem" data-jdenticon-value="<%= current_user.email %>"></svg>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><%= link_to destroy_user_session_path, method: :delete, class: 'no-style' do %>
+                <button class="mx-3 btn btn-danger">Logout</button>
+              <% end %></li>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to new_user_session_path, class: 'no-style' do %>
+          <i style="font-size: 2rem" class="bi bi-person-circle"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+
+<body>
+<% if notice %>
+  <div class="mx-3 mt-3 alert alert-success"><%= notice %></div>
+<% end %>
+<% if alert %>
+  <div class="mx-3 mt-3 alert alert-danger"><%= alert %></div>
+<% end %>
+<%= yield %>
+
+<!-- Bootstrap JS v5.0.1 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"
+        data-turbolinks-eval="false"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.0/dist/jdenticon.min.js" async
+        integrity="sha384-VngWWnG9GS4jDgsGEUNaoRQtfBGiIKZTiXwm9KpgAeaRn6Y/1tAFiyXqSzqC8Ga/"
+        crossorigin="anonymous"></script>
+</body>
+</html>

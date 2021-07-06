@@ -1,0 +1,56 @@
+<div class="mx-3 mt-3">
+  <% if @bills.empty? && @paydays.empty? %>
+    <div class="alert alert-warning">Add some bills and paydays to get started.</div>
+  <% elsif @bills.empty? && !@paydays.empty? %>
+    <div class="alert alert-warning">Add some bills to get started.</div>
+  <% elsif !@bills.empty? && @paydays.empty? %>
+    <div class="alert alert-warning">Add some paydays to get started.</div>
+  <% elsif !@bills.empty? && !@paydays.empty? %>
+    <div class="row">
+      <div class="col-xl-8">
+        <%= month_calendar events: @events do |date, events| %>
+          <%= date.day %>
+
+          <% events.each do |event| %>
+            <% if event.is_a? AccountBalance %>
+              <br>
+              <span class="badge bg-light text-dark">$<%= "%.2f" % event.amount %></span>
+            <% elsif event.is_a? Bill %>
+              <br>
+              <%= link_to bill_path(event.id) do %>
+                <span class="badge bg-danger"><%= event.name %> - $<%= "%.2f" % event.amount %></span>
+              <% end %>
+            <% elsif event.is_a? Payday %>
+              <br>
+              <%= link_to payday_path(event.id) do %>
+                <span class="badge bg-success">Payday - <%= event.name %></span>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <!-- Form is submitted on change of switch -->
+        <%= form_with url: '/calendar_settings', id: 'calendar_settings', local: false do |form| %>
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="show_balance_each_day" name="show_balance_each_day" <% if cookies[:show_balance_each_day] %>checked<% end %>>
+            <label class="form-check-label" for="show_balance_each_day">Show account balance for each day?</label>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-xl-4">
+        <h1>There should be <span class="badge bg-secondary">$<%= "%.2f" % @target_account_balance %></span> in your
+          bills account
+          <% if params.dig(:date) %> on <%= params[:date] %>
+          <% end %></h1>
+        <!--      <h1>You will deposit <span class="badge bg-secondary">$<%#= "%.2f" % @next_deposit %></span> at your next payday on-->
+        <!--        Xxxday the Xth</h1>-->
+        <!--      <h1>You should have deposited <span class="badge bg-secondary">$<%#= "%.2f" % @last_deposit %></span> at your last-->
+        <!--        payday on Xxxday the Xth</h1>-->
+      </div>
+    </div>
+
+  <% end %>
+</div>
+
+<%= javascript_pack_tag 'calendar', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'home', 'data-turbolinks-track': 'reload' %>

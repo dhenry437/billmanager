@@ -1,0 +1,11 @@
+id,name,date,recurring,user_id,created_at,updated_at
+1,Flexcube,2021-05-14,"---
+:start_time: 2021-05-14 00:00:00.000000000 +10:00
+:rrules:
+- :validations: {}
+  :rule_type: IceCube::WeeklyRule
+  :interval: 2
+  :week_start: 0
+:rtimes: []
+:extimes: []
+",12,2021-06-08 20:41:25.155934,2021-06-08 20:42:49.261645
