@@ -79,11 +79,11 @@ Rails.application.configure do
 
   # SMTP
   config.action_mailer.smtp_settings = {
-    :address              => "mail.smtp2go.com",
-    :port                 => 2525,
-    :user_name            => Rails.application.credentials.smtp[:user_name],
-    :password             => Rails.application.credentials.smtp[:password],
-    :authentication       => "plain",
+    :address => "in-v3.mailjet.com",
+    :port => 587,
+    :user_name => Rails.application.credentials.mail_jet[:user_name],
+    :password => Rails.application.credentials.mail_jet[:password],
+    :authentication => "plain",
     :enable_starttls_auto => true
   }
 
