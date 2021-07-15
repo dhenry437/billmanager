@@ -24,6 +24,7 @@ class HomeController < ApplicationController
     date = params[:date] || Date.today
     date = date.to_date + 1.second
     @target_account_balance = account_balance_at(date)
+    # @target_account_balance = payday_balance(date)
   end
 
   def set_calendar_events
@@ -31,28 +32,9 @@ class HomeController < ApplicationController
     @calendar_bills = @bills.flat_map { |x| x.calendar_bills(params.fetch(:start_date, Time.zone.now)) }
     @paydays = Payday.where(user_id: current_user.id).all
     @calendar_paydays = @paydays.flat_map { |x| x.calendar_paydays(params.fetch(:start_date, Time.zone.now)) }
-    if cookies[:show_balance_each_day]
-      @calendar_account_balances = calendar_account_balances(params.fetch(:start_date, Time.zone.now))
-      @events = @calendar_account_balances + @calendar_bills + @calendar_paydays
-    else
-      @events = @calendar_bills + @calendar_paydays
-    end
-  end
-
-  # Calculate target account balance for a given date
-  def balance_at(date = Date.today)
-    # date += 1.second # maybe in the wrong place
-    balance_at = 0
-    upcoming_bills = Bill.where(user_id: current_user.id).all.flat_map do |x|
-      x.next_bill(date)
-    end
-    upcoming_bills.each do |bill|
-      paydays_between = Payday.where(user_id: current_user.id).all.flat_map do |x|
-        x.paydays_between(date, bill.date)
-      end
-      balance_at += bill.amount / (paydays_between.empty? ? 1 : paydays_between.length)
-    end
-    balance_at
+    @calendar_account_balances = cookies[:show_balance_each_day] ? calendar_account_balances(params.fetch(:start_date, Time.zone.now)) : []
+    @calendar_payday_deposits = cookies[:show_payday_deposits] ? calendar_payday_deposits(params.fetch(:start_date, Time.zone.now)) : []
+    @events = @calendar_account_balances + @calendar_payday_deposits + @calendar_bills + @calendar_paydays
   end
 
   def account_balance_at(date = Date.today)
@@ -64,10 +46,42 @@ class HomeController < ApplicationController
     end
 
     # TODO: Figure out what to do when there is not a previous payday
-    last_payday ? balance_at(last_payday.date) - bills_since_last_payday.inject(0) { |sum, x| sum + x.amount } : -1
+    last_payday ? payday_balance(last_payday.date) - bills_since_last_payday.inject(0) { |sum, x| sum + x.amount } : -1
+    # last_payday ? payday_deposit(last_payday.date) : -1
   end
 
-  def calendar_account_balances(start)
+  def payday_balance(date)
+    paydays = Payday.where(user_id: current_user.id).all
+    upcoming_bills = Bill.where(user_id: current_user.id).all.flat_map do |x|
+      x.next_bill(date)
+    end
+    balance = 0
+    upcoming_bills.each do |bill|
+      paydays_bill_cycle = paydays.flat_map { |x| x.paydays_between(bill.previous_bill(bill.date).date, bill.date) }
+      num_paydays_bill_cycle = paydays_bill_cycle.length
+      num_paydays_past = paydays_bill_cycle.select { |x| x.date <= date }.length
+      balance += num_paydays_past * (bill.amount / num_paydays_bill_cycle)
+      puts "DEBUG: #{bill.name} = #{bill.previous_bill(bill.date).date} - #{bill.date}"
+      puts "DEBUG: #{bill.name} = #{num_paydays_past} * (#{bill.amount} / #{num_paydays_bill_cycle})"
+    end
+    balance
+  end
+
+  def payday_deposit(date)
+    paydays = Payday.where(user_id: current_user.id).all
+    upcoming_bills = Bill.where(user_id: current_user.id).all.flat_map do |x|
+      x.next_bill(date)
+    end
+    balance = 0
+    upcoming_bills.each do |bill|
+      paydays_bill_cycle = paydays.flat_map { |x| x.paydays_between(bill.previous_bill(bill.date).date, bill.date) }
+      num_paydays_bill_cycle = paydays_bill_cycle.length
+      balance += bill.amount / num_paydays_bill_cycle
+      puts "DEBUG: #{bill.name} = #{bill.previous_bill(bill.date).date} - #{bill.date}"
+      puts "DEBUG: #{bill.name} = #{bill.amount} / #{num_paydays_bill_cycle}"
+    end
+    balance
+  enddef calendar_account_balances(start)
     start_date = start.to_time.beginning_of_month.beginning_of_week
     end_date = start.to_time.end_of_month.end_of_week
 
@@ -75,5 +89,14 @@ class HomeController < ApplicationController
       x += 1.second
       AccountBalance.new(x, account_balance_at(x))
     end
+  end
+
+  def calendar_payday_deposits(start)
+    start_date = start.to_time.beginning_of_month.beginning_of_week
+    end_date = start.to_time.end_of_month.end_of_week
+
+    paydays = Payday.where(user_id:  current_user.id).all
+    payday_dates = paydays.flat_map { |x| x.paydays_between(start_date, end_date) }
+    payday_dates.map { |x| PaydayDeposit.new(x.date, payday_deposit(x.date)) }
   end
 end

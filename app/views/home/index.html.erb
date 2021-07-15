@@ -15,6 +15,9 @@
             <% if event.is_a? AccountBalance %>
               <br>
               <span class="badge bg-light text-dark">$<%= "%.2f" % event.amount %></span>
+            <% elsif event.is_a? PaydayDeposit %>
+              <br>
+              <span class="badge bg-primary">$<%= "%.2f" % event.amount %></span>
             <% elsif event.is_a? Bill %>
               <br>
               <%= link_to bill_path(event.id) do %>
@@ -31,8 +34,16 @@
         <!-- Form is submitted on change of switch -->
         <%= form_with url: '/calendar_settings', id: 'calendar_settings', local: false do |form| %>
           <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" id="show_balance_each_day" name="show_balance_each_day" <% if cookies[:show_balance_each_day] %>checked<% end %>>
+            <input class="form-check-input" type="checkbox" id="show_balance_each_day" name="show_balance_each_day"
+                   <% if cookies[:show_balance_each_day] %>checked
+                   <% end %>>
             <label class="form-check-label" for="show_balance_each_day">Show account balance for each day?</label>
+          </div>
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="show_payday_deposits" name="show_payday_deposits"
+                   <% if cookies[:show_payday_deposits] %>checked
+                   <% end %>>
+            <label class="form-check-label" for="show_balance_each_day">Show deposit amount for each payday?</label>
           </div>
         <% end %>
       </div>

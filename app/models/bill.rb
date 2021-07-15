@@ -13,7 +13,18 @@ class Bill < ApplicationRecord
     if recurring.nil?
       date > Date.today ? [self] : nil
     else
-      x = schedule.next_occurrence(start.to_time) # Get occurrences
+      x = schedule.next_occurrence(start.to_time) # Get occurrence
+      Bill.new(id: id, name: name, amount: amount, date: x, recurring: recurring) # Create new in memory bill
+    end
+  end
+
+  # Returns the previous occurrence or recurrence of a Bill
+  def previous_bill(start = Date.today)
+    if recurring.nil?
+      date < Date.today ? [self] : nil
+    else
+      # puts start.to_time
+      x = schedule.previous_occurrence(start.to_time - 1.hour) # Get occurrence
       Bill.new(id: id, name: name, amount: amount, date: x) # Create new in memory bill
     end
   end
