@@ -40,9 +40,13 @@
             <svg width="2rem" height="2rem" data-jdenticon-value="<%= current_user.email %>"></svg>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><%= link_to destroy_user_session_path, method: :delete, class: 'no-style' do %>
+            <li><a class="dropdown-item" href="#">Account Settings</a></li>
+            <li><a class="dropdown-item" href="#">Change Password</a></li>
+            <li class="text-end">
+              <%= link_to destroy_user_session_path, method: :delete, class: 'no-style' do %>
                 <button class="mx-3 btn btn-danger">Logout</button>
-              <% end %></li>
+              <% end %>
+            </li>
           </ul>
         </div>
       <% else %>
