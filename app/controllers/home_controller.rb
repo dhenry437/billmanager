@@ -77,11 +77,13 @@ class HomeController < ApplicationController
       paydays_bill_cycle = paydays.flat_map { |x| x.paydays_between(bill.previous_bill(bill.date).date, bill.date) }
       num_paydays_bill_cycle = paydays_bill_cycle.length
       balance += bill.amount / num_paydays_bill_cycle
-      puts "DEBUG: #{bill.name} = #{bill.previous_bill(bill.date).date} - #{bill.date}"
-      puts "DEBUG: #{bill.name} = #{bill.amount} / #{num_paydays_bill_cycle}"
+      # puts "DEBUG: #{bill.name} = #{bill.previous_bill(bill.date).date} - #{bill.date}"
+      # puts "DEBUG: #{bill.name} = #{bill.amount} / #{num_paydays_bill_cycle}"
     end
     balance
-  enddef calendar_account_balances(start)
+  end
+
+  def calendar_account_balances(start)
     start_date = start.to_time.beginning_of_month.beginning_of_week
     end_date = start.to_time.end_of_month.end_of_week
 

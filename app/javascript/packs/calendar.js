@@ -2,10 +2,10 @@
 // $('.day').click(function () {
 //     window.location.href = `/bills/add?date=${$(this).data('date')}`
 // });
-$('.day').click(function () {
-    // window.location.href = `/bills/add?date=${$(this).data('date')}`
-    window.location.href = getNewUrl(window.location.href, $(this).data('date'))
-});
+// $('.day').click(function () {
+//     // window.location.href = `/bills/add?date=${$(this).data('date')}`
+//     window.location.href = getNewUrl(window.location.href, $(this).data('date'))
+// });
 
 function getNewUrl(oldUrl, data_val) {
     // var data_val = "new_data";
