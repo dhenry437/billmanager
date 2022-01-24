@@ -23,7 +23,7 @@ class Bill < ApplicationRecord
     if recurring.nil?
       date < Date.today ? [self] : nil
     else
-      # puts start.to_time
+      puts start.to_time + 1.hour
       x = schedule.previous_occurrence(start.to_time - 1.hour) # Get occurrence
       Bill.new(id: id, name: name, amount: amount, date: x) # Create new in memory bill
     end
@@ -34,7 +34,7 @@ class Bill < ApplicationRecord
     if recurring.nil?
       date > Date.today && date < end_date ? [self] : nil
     else
-      schedule.occurrences_between(start_date.to_time, end_date.to_time, spans: true).map do |x| # Get occurrences
+      schedule.occurrences_between(start_date.to_time + 1.hour, end_date.to_time, spans: true).map do |x| # Get occurrences
         Bill.new(id: id, name: name, amount: amount, date: x) # Create new in memory bill
       end
     end
